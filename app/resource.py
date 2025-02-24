@@ -6,6 +6,7 @@ class Emulator(TypedDict, total=False):
     description: str
     root: str
     bios_url: str
+    threads: bool
 
 
 class Rom(TypedDict):
@@ -19,3 +20,4 @@ class Gameplay(TypedDict, total=False):
     rom_name: str
     rom_url: str
     bios_url: str
+    threads: bool

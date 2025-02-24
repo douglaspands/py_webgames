@@ -19,13 +19,13 @@ Siga os passos abaixo para configurar e executar a aplicação localmente:
 
 1. Clone o repositório:
     ```bash
-    git clone https://github.com/seu-usuario/py_webgames.git
+    git clone https://github.com/douglaspands/py_webgames.git
     cd py_webgames
     ```
 
 2. Instale o Poetry, se ainda não o tiver instalado:
     ```bash
-    python -m pip install poetry
+    pip install poetry
     ```
 
 3. Instale as dependências do projeto:
