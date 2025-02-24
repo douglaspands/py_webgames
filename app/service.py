@@ -21,12 +21,12 @@ def get_b64_rom(url: str) -> str:
 
 def get_emulators() -> list[tuple[str, str]]:
     return [
-        ("nes", "Nintendo"),
-        ("snes", "Super Nintendo"),
+        ("nes", "Nintendo / Famicom"),
+        ("snes", "Super Nintendo / Super Famicom"),
         ("gba", "GameBoy"),
         ("gba", "GameBoy Color"),
         ("gba", "GameBoy Advance"),
-        ("sega32x", "Master System"),
-        ("sega32x", "Genesis"),
-        ("sega32x", "32X"),
+        ("sega32x", "Master System / Sega Mark III"),
+        ("sega32x", "Mega Drive / Genesis"),
+        ("sega32x", "Sega 32X"),
     ]
