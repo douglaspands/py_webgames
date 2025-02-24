@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}WebGame{% endblock %}
+{% block content %}
+<p>
+<h1>Game</h1>
+</p>
+<p>
+<form class="row g-3" action="/game" method="post">
+    <div class="col-md-4">
+        <label for="inputEmulator" class="form-label">Console</label>
+        <select id="inputEmulator" name="emulator" class="form-select">
+            <option selected disabled>Escolha...</option>
+            {% for emulator in context.emulators %}
+            <option value="{{ emulator[0] + '|' + emulator[1] }}">{{ emulator[1] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-12">
+        <label for="inputRom" class="form-label">URL da ROM</label>
+        <input type="text" class="form-control" id="inputRom" placeholder="Url da ROM" name="rom" aria-describedby="romHelpBlock">
+        <div id="romHelpBlock" class="form-text">
+            Um bom site para capturar as urls das roms: <a href="https://myrient.erista.me/files/No-Intro/" target="_blank">Myrient</a>
+        </div>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Iniciar</button>
+    </div>
+</form>
+</p>
+{% endblock %}

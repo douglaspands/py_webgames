@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}{{ context.rom_name }} - {{ context.console }}{% endblock %}
+{% block content %}
+<p>
+    <div style='text-align:center;'>
+        <h3>{{ context.console }} - {{ context.rom_name }}</h3>
+    </div>
+</p>
+<p>
+    <div style='width:640px;height:480px;max-width:100%;margin:auto;'>
+        <div id='game'></div>
+    </div>
+    <script type='text/javascript'>
+        let byteCharacters = atob("{{ context.rom_b64 }}");
+        let byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }; 
+        // Emulator.Js
+        EJS_player = '#game';
+        EJS_gameID = 1;
+        EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+        EJS_core = '{{ context.emulator }}';
+        EJS_biosUrl = '{{ context.bios }}';
+        EJS_gameUrl = URL.createObjectURL(new Blob([Uint8Array.from(byteNumbers)]));
+    </script>
+    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+</p>
+{% endblock %}
