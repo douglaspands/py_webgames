@@ -2,29 +2,33 @@
 {% block title %}WebGame{% endblock %}
 {% block content %}
 <p>
-<h1>Game</h1>
+<h1>Qual jogo deseja jogar?</h1>
 </p>
 <p>
 <form class="row g-3" action="/gameplay" method="post">
-    <div class="col-md-4">
-        <label for="inputEmulator" class="form-label">Console</label>
-        <select id="inputEmulator" name="emulator" class="form-select">
-            <option selected disabled>Opções para sua escolha...</option>
-            {% for emulator in context.emulators %}
-            <option value="{{ emulator[0] + '|' + emulator[1] }}">{{ emulator[1] }}</option>
-            {% endfor %}
-        </select>
-    </div>
     <div class="col-12">
-        <label for="inputRom" class="form-label">URL da ROM</label>
-        <input type="text" class="form-control" id="inputRom" placeholder="Preencha a URL da ROM que quer jogar..." name="rom" aria-describedby="romHelpBlock">
-        <div id="romHelpBlock" class="form-text">
-            Um bom site para capturar as URLs das roms: <a href="https://myrient.erista.me/files/No-Intro/" target="_blank">Myrient</a>
+        <div class="col-md-4">
+            <label for="inputEmulator" class="form-label">Console</label>
+            <select id="inputEmulator" name="emulator" class="form-select">
+                <option selected disabled>Escolha um console...</option>
+                {% for emulator in context.emulators %}
+                <option value="{{ emulator.description }}">{{ emulator.description }}</option>
+                {% endfor %}
+            </select>
         </div>
     </div>
     <div class="col-12">
-        <button type="submit" class="btn btn-primary">Iniciar</button>
+        <div class="col-md-4">
+            <label for="inputRom" class="form-label">Game</label>
+            <select id="inputRom" name="rom" class="form-select">
+                <option selected disabled>Escolha um game...</option>
+            </select>
+        </div>
+    </div>    
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary" disabled>Iniciar</button>
     </div>
 </form>
 </p>
+<script src="/static/script/index.js"></script>
 {% endblock %}

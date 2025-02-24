@@ -3,7 +3,7 @@
 {% block content %}
 <p>
     <div style='text-align:center;'>
-        <h3>{{ context.console }} - {{ context.rom_name }}</h3>
+        <h3>{{ context.console }}<br>{{ context.rom_name }}</h3>
     </div>
 </p>
 <p>
@@ -11,14 +11,13 @@
         <div id='game'></div>
     </div>
     <script type='text/javascript'>
-        // Emulator.Js
         EJS_player = '#game';
         EJS_gameID = 1;
         EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
         EJS_core = '{{ context.emulator }}';
-        EJS_biosUrl = '{{ context.bios }}';
+        EJS_biosUrl = '{{ context.bios_url }}';
         EJS_gameUrl = '{{ context.rom_url }}';
-        EJS_language = 'pt-BR';
+        // EJS_language = 'pt-BR';
     </script>
     <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 </p>

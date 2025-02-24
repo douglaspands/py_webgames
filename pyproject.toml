@@ -1,6 +1,6 @@
 [project]
 name = "py-webgames"
-version = "0.2.0"
+version = "0.3.0"
 description = "Servidor de games via Emulator.js"
 authors = [
     {name = "Douglas Panhota",email = "douglaspands@gmail.com"}
@@ -9,7 +9,8 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "flask (>=3.1.0,<4.0.0)",
-    "requests (>=2.32.3,<3.0.0)"
+    "requests (>=2.32.3,<3.0.0)",
+    "parsel (>=1.10.0,<2.0.0)"
 ]
 
 [tool.poetry]
@@ -18,7 +19,6 @@ packages = [{include = "app"}]
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.9.7"
 mypy = "^1.15.0"
-types-flask-cors = "^5.0.0.20240902"
 types-requests = "^2.32.0.20241016"
 
 [build-system]
