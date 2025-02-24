@@ -1,4 +1,5 @@
 import base64
+import json
 from functools import cache
 from pathlib import Path
 
@@ -12,55 +13,10 @@ URL_BASE = "https://myrient.erista.me/files/No-Intro"
 
 @cache
 def get_emulators() -> list[Emulator]:
+    with open("app/config/emulators.json") as f:
+        content = json.load(f)
     return sorted(
-        [
-            {
-                "name": "nes",
-                "description": "Nintendo - Nintendo Entertainment System",
-                "root": "Nintendo - Nintendo Entertainment System (Headered)",
-            },
-            {
-                "name": "snes",
-                "description": "Nintendo - Super Nintendo Entertainment System",
-                "root": "Nintendo - Super Nintendo Entertainment System",
-            },
-            {
-                "name": "gba",
-                "description": "Nintendo - Game Boy",
-                "root": "Nintendo - Game Boy",
-            },
-            {
-                "name": "gba",
-                "description": "Nintendo - Game Boy Color",
-                "root": "Nintendo - Game Boy Color",
-            },
-            {
-                "name": "gba",
-                "description": "Nintendo - Game Boy Advance",
-                "root": "Nintendo - Game Boy Advance",
-            },
-            {
-                "name": "sega32x",
-                "description": "Sega - Master System - Mark III",
-                "root": "Sega - Master System - Mark III",
-            },
-            {
-                "name": "sega32x",
-                "description": "Sega - Mega Drive - Genesis",
-                "root": "Sega - Mega Drive - Genesis",
-            },
-            {"name": "sega32x", "description": "Sega - 32X", "root": "Sega - 32X"},
-            {
-                "name": "mednafen_pce",
-                "description": "NEC - PC Engine - TurboGrafx-16",
-                "root": "NEC - PC Engine - TurboGrafx-16",
-            },
-            {
-                "name": "atari2600",
-                "description": "Atari - 2600",
-                "root": "Atari - 2600",
-            },
-        ],
+        content,
         key=lambda x: x["description"],
     )
 
@@ -85,6 +41,13 @@ def get_roms(console: str) -> list[Rom]:
         if idx == 0:
             continue
         file = Path(rom.get())
+        if any(
+            [
+                ignore_word in file.name
+                for ignore_word in ["DLC", "Update", "Demo", "Theme"]
+            ]
+        ):
+            continue
         result.append(
             {
                 "name": file.name.replace(file.suffix, ""),
@@ -111,4 +74,5 @@ def gameplay_detail(console: str, game: str) -> Gameplay:
     context["rom_url"] = f"/roms/{rom_url_b64}"
     context["rom_name"] = rom["name"]
     context["bios_url"] = ""
+    context["threads"] = emulator["threads"]
     return context

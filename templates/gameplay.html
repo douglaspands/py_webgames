@@ -17,6 +17,8 @@
         EJS_core = '{{ context.emulator }}';
         EJS_biosUrl = '{{ context.bios_url }}';
         EJS_gameUrl = '{{ context.rom_url }}';
+        EJS_gameUrl = '{{ context.rom_url }}';
+        EJS_threads = {% if context.threads %} true {% else %} false {% endif %};
         // EJS_language = 'pt-BR';
     </script>
     <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>

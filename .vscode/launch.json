@@ -11,15 +11,15 @@
             "module": "flask",
             "env": {
                 "FLASK_APP": "wsgi.py",
-                "FLASK_DEBUG": "1"
             },
             "args": [
                 "run",
-                "--no-debugger",
-                "--no-reload"
+                "--debug",
+                // "--no-debugger",
+                // "--no-reload"
             ],
             "jinja": true,
-            "autoStartBrowser": false
+            "autoStartBrowser": true
         }
     ]
 }

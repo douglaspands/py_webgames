@@ -1,12 +1,12 @@
 [project]
 name = "py-webgames"
-version = "0.3.0"
+version = "0.4.0"
 description = "Servidor de games via Emulator.js"
 authors = [
     {name = "Douglas Panhota",email = "douglaspands@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.11,<3.14"
 dependencies = [
     "flask (>=3.1.0,<4.0.0)",
     "requests (>=2.32.3,<3.0.0)",
