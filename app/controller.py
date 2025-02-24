@@ -1,8 +1,7 @@
 import base64
-import urllib.parse
 
 import requests
-from flask import Blueprint, Response, render_template, request
+from flask import Blueprint, Response, jsonify, redirect, render_template, request
 
 from app import service
 
@@ -16,27 +15,34 @@ def index():
 
 
 @app.route("/gameplay", methods=["POST"])
-def gameplay():
+def gameplay_redirect():
     payload = dict(request.form)
-    context = {}
-    context["emulator"] = (emu_system := payload["emulator"].split("|"))[0]
-    context["console"] = emu_system[1]
-    rom_url = urllib.parse.unquote(payload["rom"])
-    rom_url_b64 = base64.b64encode(
-        (urllib.parse.unquote(rom_url)).encode("utf-8")
-    ).decode("utf-8")
-    context["rom_url"] = f"/rom/{rom_url_b64}"
-    context["rom_name"] = rom_url.split("/")[-1]
-    context["bios"] = ""
+    return redirect(f"/gameplay/{payload['emulator']}/{payload['rom']}")
+
+
+@app.route("/gameplay/<console>/<game>", methods=["GET"])
+def gameplay(console: str, game: str):
+    context = service.gameplay_detail(
+        console=console,
+        game=game,
+    )
     return render_template("gameplay.html", context=context)
 
 
-@app.route("/rom/<path>", methods=["GET", "HEAD"])
+@app.route("/roms", methods=["GET"])
+def rom_list():
+    console = request.args.get("console")
+    roms = service.get_roms(console=console)
+    return jsonify(roms)
+
+
+@app.route("/roms/<path>", methods=["HEAD", "GET"])
 def rom_path(path: str):
     if request.method == "HEAD":
         return Response(status=200)
     else:
-        res = requests.get(base64.b64decode(path).decode("utf-8"))
+        url = base64.b64decode(path).decode("utf-8")
+        res = requests.get(url)
         headers = dict(
             [
                 (key, value)
