@@ -5,11 +5,11 @@
 <h1>Game</h1>
 </p>
 <p>
-<form class="row g-3" action="/game" method="post">
+<form class="row g-3" action="/gameplay" method="post">
     <div class="col-md-4">
         <label for="inputEmulator" class="form-label">Console</label>
         <select id="inputEmulator" name="emulator" class="form-select">
-            <option selected disabled>Escolha...</option>
+            <option selected disabled>Opções para sua escolha...</option>
             {% for emulator in context.emulators %}
             <option value="{{ emulator[0] + '|' + emulator[1] }}">{{ emulator[1] }}</option>
             {% endfor %}
@@ -17,9 +17,9 @@
     </div>
     <div class="col-12">
         <label for="inputRom" class="form-label">URL da ROM</label>
-        <input type="text" class="form-control" id="inputRom" placeholder="Url da ROM" name="rom" aria-describedby="romHelpBlock">
+        <input type="text" class="form-control" id="inputRom" placeholder="Preencha a URL da ROM que quer jogar..." name="rom" aria-describedby="romHelpBlock">
         <div id="romHelpBlock" class="form-text">
-            Um bom site para capturar as urls das roms: <a href="https://myrient.erista.me/files/No-Intro/" target="_blank">Myrient</a>
+            Um bom site para capturar as URLs das roms: <a href="https://myrient.erista.me/files/No-Intro/" target="_blank">Myrient</a>
         </div>
     </div>
     <div class="col-12">

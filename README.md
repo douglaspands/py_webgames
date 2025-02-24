@@ -1,6 +1,6 @@
 # Py-WebGames
 
-Bem-vindo ao WebGames! Esta é uma aplicação web para jogar diversos jogos online, desenvolvida em Python utilizando Flask.
+Bem-vindo ao WebGames! Esta é uma aplicação web para jogar diversos jogos online, desenvolvida em Python utilizando EmulatorJS.
 
 ## Funcionalidades
 
@@ -11,7 +11,7 @@ Bem-vindo ao WebGames! Esta é uma aplicação web para jogar diversos jogos onl
 ## Tecnologias Utilizadas
 
 - **Python**: Linguagem de programação principal.
-- **Flask**: Framework web utilizado para desenvolver a aplicação.
+- **EmulatorJs**: Framework web utilizado para emular jogos direto do navegador.
 
 ## Instalação
 
