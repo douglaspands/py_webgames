@@ -1,7 +1,15 @@
 import base64
 
 import requests
-from flask import Blueprint, Response, jsonify, redirect, render_template, request
+from flask import (
+    Blueprint,
+    Response,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    stream_with_context,
+)
 
 from app import service
 
@@ -36,24 +44,17 @@ def rom_list():
     return jsonify(roms)
 
 
-@app.route("/roms/<path>", methods=["HEAD", "GET"])
-def rom_path(path: str):
+@app.route("/roms/download/<path>", methods=["HEAD", "GET"])
+def rom_path_stream(path: str):
+    def generate():
+        url = base64.b64decode(path).decode("utf-8")
+        with requests.Session() as session:
+            with session.get(url, stream=True) as res:
+                res.raise_for_status()
+                for content in res.raw.stream():
+                    yield content
+
     if request.method == "HEAD":
         return Response(status=200)
     else:
-        url = base64.b64decode(path).decode("utf-8")
-        res = requests.get(url)
-        headers = dict(
-            [
-                (key, value)
-                for key, value in res.raw.headers.items()
-                if key.lower()
-                not in (
-                    "content-encoding",
-                    "content-length",
-                    "transfer-encoding",
-                    "connection",
-                )
-            ]
-        )
-        return Response(res.content, res.status_code, headers)
+        return stream_with_context(generate())
