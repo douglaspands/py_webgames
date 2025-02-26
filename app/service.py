@@ -71,7 +71,7 @@ def gameplay_detail(console: str, game: str) -> Gameplay:
     context["console"] = console
     rom = get_rom(console=console, game=game)
     rom_url_b64 = base64.b64encode(rom["url"].encode("utf-8")).decode("utf-8")
-    context["rom_url"] = f"/roms/donwload/{rom_url_b64}"
+    context["rom_url"] = f"/roms/download/{rom_url_b64}"
     context["rom_name"] = rom["name"]
     context["bios_url"] = ""
     context["threads"] = emulator["threads"]
