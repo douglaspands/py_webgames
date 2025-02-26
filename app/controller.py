@@ -51,8 +51,8 @@ def rom_download(path: str):
         with requests.Session() as session:
             with session.get(url, stream=True) as res:
                 res.raise_for_status()
-                for content in res.raw.stream():
-                    yield content
+                for chunk in res.raw.stream():
+                    yield chunk
 
     if request.method == "HEAD":
         return Response(status=200)
@@ -67,8 +67,8 @@ def bios_download(path: str):
         with requests.Session() as session:
             with session.get(url, stream=True) as res:
                 res.raise_for_status()
-                for content in res.raw.stream():
-                    yield content
+                for chunk in res.raw.stream():
+                    yield chunk
 
     if request.method == "HEAD":
         return Response(status=200)
