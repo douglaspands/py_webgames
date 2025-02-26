@@ -45,7 +45,23 @@ def rom_list():
 
 
 @app.route("/roms/download/<path>", methods=["HEAD", "GET"])
-def rom_path_stream(path: str):
+def rom_download(path: str):
+    def generate():
+        url = base64.b64decode(path).decode("utf-8")
+        with requests.Session() as session:
+            with session.get(url, stream=True) as res:
+                res.raise_for_status()
+                for content in res.raw.stream():
+                    yield content
+
+    if request.method == "HEAD":
+        return Response(status=200)
+    else:
+        return stream_with_context(generate())
+
+
+@app.route("/bios/download/<path>", methods=["HEAD", "GET"])
+def bios_download(path: str):
     def generate():
         url = base64.b64decode(path).decode("utf-8")
         with requests.Session() as session:

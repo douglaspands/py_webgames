@@ -1,11 +1,11 @@
 import base64
-import json
 from functools import cache
 from pathlib import Path
 
 import requests
 from parsel import Selector
 
+from app.config.emulators import EMULATORS
 from app.resource import Emulator, Gameplay, Rom
 
 URL_BASE = "https://myrient.erista.me/files/No-Intro"
@@ -13,10 +13,8 @@ URL_BASE = "https://myrient.erista.me/files/No-Intro"
 
 @cache
 def get_emulators() -> list[Emulator]:
-    with open("app/config/emulators.json") as f:
-        content = json.load(f)
     return sorted(
-        content,
+        EMULATORS,
         key=lambda x: x["description"],
     )
 
@@ -73,6 +71,11 @@ def gameplay_detail(console: str, game: str) -> Gameplay:
     rom_url_b64 = base64.b64encode(rom["url"].encode("utf-8")).decode("utf-8")
     context["rom_url"] = f"/roms/download/{rom_url_b64}"
     context["rom_name"] = rom["name"]
-    context["bios_url"] = ""
-    context["threads"] = emulator["threads"]
+    bios_url_b64 = (
+        base64.b64encode(emulator["bios_url"].encode("utf-8")).decode("utf-8")
+        if emulator.get("bios_url")
+        else ""
+    )
+    context["bios_url"] = f"/bios/download/{bios_url_b64}" if bios_url_b64 else ""
+    context["threads"] = emulator.get("threads", False)
     return context

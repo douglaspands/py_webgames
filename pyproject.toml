@@ -1,6 +1,6 @@
 [project]
 name = "py-webgames"
-version = "0.5.1"
+version = "0.6.0"
 description = "Servidor de games via Emulator.js"
 authors = [
     {name = "Douglas Panhota",email = "douglaspands@gmail.com"}
