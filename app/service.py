@@ -1,22 +1,27 @@
 import base64
-import json
 from functools import cache
 from pathlib import Path
+from typing import Any, cast
 
 import requests
 from parsel import Selector
 
+from app.config.emulators import EMULATORS
 from app.resource import Emulator, Gameplay, Rom
 
 URL_BASE = "https://myrient.erista.me/files/No-Intro"
+OPTIONS_DEFAULT: dict[str, Any] = {
+    # "shader": "crt-easymode.glslp",
+    "shader": "crt-mattias.glslp",
+    "save-state-slot": 1,
+    "save-state-location": "browser",
+}
 
 
 @cache
 def get_emulators() -> list[Emulator]:
-    with open("app/config/emulators.json") as f:
-        content = json.load(f)
     return sorted(
-        content,
+        EMULATORS,
         key=lambda x: x["description"],
     )
 
@@ -61,7 +66,7 @@ def get_roms(console: str) -> list[Rom]:
 def get_rom(console: str, game: str) -> Rom:
     emulator = get_emulator(console=console)
     roms = get_roms(console=emulator["description"])
-    return [rom for rom in roms if game == rom["name"]][0]
+    return [rom for rom in roms if rom["name"] == game][0]
 
 
 def gameplay_detail(console: str, game: str) -> Gameplay:
@@ -73,6 +78,14 @@ def gameplay_detail(console: str, game: str) -> Gameplay:
     rom_url_b64 = base64.b64encode(rom["url"].encode("utf-8")).decode("utf-8")
     context["rom_url"] = f"/roms/download/{rom_url_b64}"
     context["rom_name"] = rom["name"]
-    context["bios_url"] = ""
-    context["threads"] = emulator["threads"]
+    bios_url_b64 = (
+        base64.b64encode(emulator["bios_url"].encode("utf-8")).decode("utf-8")
+        if emulator.get("bios_url")
+        else ""
+    )
+    context["bios_url"] = f"/bios/download/{bios_url_b64}" if bios_url_b64 else ""
+    context["threads"] = emulator.get("threads", False)
+    options = OPTIONS_DEFAULT.copy()
+    options.update(**cast(dict, emulator.get("options", {})))
+    context["options"] = options
     return context

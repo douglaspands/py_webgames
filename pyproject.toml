@@ -1,6 +1,6 @@
 [project]
 name = "py-webgames"
-version = "0.5.1"
+version = "0.6.0"
 description = "Servidor de games via Emulator.js"
 authors = [
     {name = "Douglas Panhota",email = "douglaspands@gmail.com"}
@@ -24,3 +24,7 @@ types-requests = "^2.32.0.20241016"
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+debug = "script.poetry:debug"
+start = "script.poetry:start"

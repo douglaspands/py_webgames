@@ -1,4 +1,4 @@
-from typing import TypedDict
+from typing import Any, TypedDict
 
 
 class Emulator(TypedDict, total=False):
@@ -21,3 +21,4 @@ class Gameplay(TypedDict, total=False):
     rom_url: str
     bios_url: str
     threads: bool
+    options: dict[str, Any]
